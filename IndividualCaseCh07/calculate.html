@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="utf-8" />
+   <meta name="viewport" content="width=device-width,initial-scale=1.0">
+   <title>Crochet :)</title>
+   <link rel="stylesheet" href="styles.css" />
+   <script src="modernizr.custom.05819.js"></script>
+</head>
+
+<body>
+   <header>
+      <h1>
+         Crochet :)
+      </h1>
+   </header>
+
+   <nav>
+      <ul>
+         <a href="index.html">Home</a> &nbsp;
+         <a href="projects.html"> Projects</a> &nbsp;
+         <a href="tips.html">Tips & Tricks</a> &nbsp;
+         <a href="calculate.html">Stitch Calculator</a> &nbsp;
+         <a href="security.html">Web Security</a>
+      </ul>
+   </nav>
+   
+   <article>
+      <h2>Stitch Calculator</h2>
+      <p>Input stitches, increases and decreases to find total stitches in a row. (Only works with dc2tog and 2 stitches in one)</p>
+
+      <h3>Type in the number of each stitch below (put 0 if not applicable)</h3>
+      <form>
+         <input type="text" id="reg"/>
+         <label for="reg">Number of single stitches (sc, dc, etc.) </label>
+         <input type="text" id="inc"/>
+         <label for="inc">Number of increases (2sc in one, 2dc in one, etc.)</label>
+         <input type="text" id="dec"/>
+         <label for="dec">Number of decreases (sc2tog, dc2tog, etc.)</label>
+         <input type="submit" id="submit" value="Submit" />
+         <p><br></p>
+      </form>
+      <div>
+      <p>Test your input below before submitting!</p>
+      <input id="test" type="text">
+      <button type="button" onclick="verify()">Test Input</button>
+      <p id="p01"></p>
+      </div>
+      <script>
+         function verify(){
+            const message = document.getElementById("p01");
+            message.innerHTML = "";
+            let x = document.getElementById("test").value;
+            try {
+               if(x.trim() == "") throw " can't leave it empty.";
+               if(isNaN(x)) throw " must use an integer.";
+               if(x == Number(x)) throw "r input is good!";
+            }
+            catch(err) {
+               message.innerHTML = "You" + err;
+            }
+         }
+      </script>
+   </article>
+   <script>
+   function calcTotal(){
+      var stitchTotal = 0;
+      var regular = document.getElementById("reg").value;
+      var increase = document.getElementById("inc").value;
+      var decrease = document.getElementById("dec").value;
+      stitchTotal = parseInt(regular) + (parseInt(increase) * 2) + parseInt(decrease);
+      alert("Your row will have a total of " + stitchTotal + " stitches.");
+   }
+   document.getElementById("submit").addEventListener("click", calcTotal, false);
+   </script>
+
+   <article>
+      <div id="results">
+          <ol>
+             <li id="row1"></li>
+             <li id="row2"></li>
+             <li id="row3"></li>
+             <li id="row4"></li>
+             <li id="row5"></li>
+          </ol>
+          <p id="resultsExpl"></p>
+      </div>
+      <form>
+          <form>
+            <input type="text" id="rowResult" />
+            <label for="rowResult">
+              Submit your total stitches so you <br> can save 5 calculations at a time. ->
+            </label>
+         </form>
+         <br>
+         <br>
+         <br>
+          <fieldset>
+            <button type="button" id="button">Submit</button>
+          </fieldset>
+      </form>
+   </article>
+   <script>
+      let i = 1;
+      let listItem = "";
+      function processInput() {
+         if (i <= 5) {
+            listItem = "row" + i;
+            document.getElementById(listItem).textContent = document.getElementById("rowResult").value;
+            document.getElementById("rowResult").value = "";
+            if (i == 5) {
+               document.getElementById("resultsExpl").textContent = "Write these down before you forget!";
+            }
+            i++;
+         }
+      }
+      document.getElementById("button").addEventListener("click", processInput);
+
+      </script>
+</body>
+</html>
